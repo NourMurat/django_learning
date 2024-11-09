@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Register - FAST_PONG</title>
+		<link rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<style>
+       		@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;700&display=swap');
+		:root {
+            --primary-color: #00ff00;
+            --secondary-color: #ff00ff;
+            --background-color: #000000;
+            --text-color: #ffffff;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black; /* GREY фон */
+			color: white;
+			font-family: 'Press Start 2P', cursive;
+        }
+		.container{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			border: 2px solid white;
+			width: 800px;
+			padding: 20px;
+		}
+		.container>*:not(:last-child){
+			margin-bottom: 10px;
+		}
+        .auth-container {
+			width: 100%;
+            background-color: black;
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+			flex-direction: row;
+        }
+
+
+        form.form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+        }
+
+        .form-header {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+			text-align: center;
+        }
+
+        .more {
+            display: flex;
+            gap: 16px;
+            justify-content: space-between;
+        }
+		.input-container{
+			display: flex;
+			align-items: center;
+			
+		}
+		.input-field{
+			border: none;
+			border-bottom: 2px solid white;
+			height: 30px;
+			background-color: rgb(20, 20, 20);
+			color: white;
+			transition-duration: 0.3s;
+		}
+		.input-field:hover{
+			border-bottom: 2px solid var(--primary-color);
+		}
+		.forgot-password{
+			color: #00ff00;
+			text-decoration: none;
+			transition-duration: 0.3s;
+		}
+		.forgot-password:hover{
+			color: #ff00ff;
+		}
+		.auth-button{
+			padding: 4px;
+			background-color: #00ff00;
+			transition-duration: 0.3s;
+			border: none;
+			box-shadow: 0 3px white;
+			color: black;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			
+		}
+		.auth-button:hover{
+			background-color: #ff00ff;
+		}
+		.auth-button:active{
+			box-shadow: none;
+			transform: translateY(3px)
+		}
+		
+		#register-button{
+			align-self: center;
+			margin: 15px 0 0 0;
+			padding: 10px;
+			font-size: 25px;
+		}
+		#register-button > a {
+			color: #000000;
+		}
+		.right-side{
+			display: flex;
+			align-items: flex-start;
+			justify-content: flex-start;
+			flex-direction: column;
+		}
+		.right-side > *{
+			height: 40px;
+			margin-bottom: 10px;
+		}
+		.left-side{
+			display: flex;
+			align-items: flex-end;
+			justify-content: flex-start;
+			flex-direction: column;
+		}
+		.left-side > *{
+			height: 40px;
+			margin-bottom: 10px;
+		}
+		.left-side > label{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		input[type="file"] {
+            display: none;
+        }
+    </style>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Register</h2>
+			<form method="POST" enctype="multipart/form-data" class="auth-container">
+				{% csrf_token %}  <!-- Django CSRF токен для защиты формы -->
+				<div class="left-side">
+					<label for="id_username">Nickname:</label>
+					<label for="id_email">Email:</label>
+					<label for="id_avatar">Avatar:</label>
+					<label for="id_password1">Password:</label>
+					<label for="id_password2">Confirm Password:</label>
+				</div>
+				<div class="right-side">
+					<input type="text" name="username" maxlength="150" class="input-field" required id="id_username">
+					<input type="email" name="email" class="input-field" required id="id_email">
+					<input type="file" class="input-none" id="file-upload" name="avatar"/>
+					<label for="file-upload" class="auth-button">Choose a file</label>
+					<input type="password" name="password1" class="input-field" required id="id_password1">
+					<input type="password" name="password2" class="input-field" required id="id_password2">
+				</div>
+				<button type="submit" id="register-button" class="auth-button">Submit</button>
+			</form>
+
+			<!-- Сообщение об успехе -->
+			<div class="success-message" id="success-message">
+				User registered successfully! Redirecting to login page...
+			</div>
+		</div>
+		
+		<!-- JavaScript для отправки формы и обработки ответа -->
+		<script>
+			// Скрываем сообщение при загрузке страницы
+			document.addEventListener("DOMContentLoaded", function() {
+				const successMessage = document.getElementById('success-message');
+				successMessage.style.display = 'none'; 
+			});
+		
+			// Обработчик отправки формы
+			document.querySelector('form').addEventListener('submit', function(event) {
+				event.preventDefault();
+		
+				const formData = new FormData(this);
+		
+				fetch("/api/register/", {  // Прямой URL для API
+					method: 'POST',
+					body: formData,
+				})
+				.then(response => {
+					if (response.status === 201) {
+						// Показать сообщение об успехе
+						const successMessage = document.getElementById('success-message');
+						if (successMessage) {
+							successMessage.style.display = 'block';
+						} else {
+							console.error("Element 'success-message' not found.");
+						}
+		
+						// Перенаправить на страницу входа через 3 секунды
+						setTimeout(() => {
+							window.location.href = "/login/";
+						}, 3000);
+					} else {
+
+						// Обработка ошибок
+						response.json().then(data => {
+							console.log("Error response data:", data);
+							alert(data.error || 'Registration failed');
+						});
+					}
+				})
+				.catch(error => {
+					console.error('Network error:', error);
+					alert("Network error occurred. Please try again.");
+				});
+			});
+		</script>
+	</body>
+</html>

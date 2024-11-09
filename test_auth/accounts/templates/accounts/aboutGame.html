@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About FAST_PONG</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #00ff00;
+            --secondary-color: #ff00ff;
+            --background-color: #000000;
+            --text-color: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.25em;
+            position: relative;
+        }
+
+        header {
+            padding: 0.25em 0;
+            border-bottom: 0.125em solid var(--primary-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5em;
+            text-decoration: none;
+            color: var(--primary-color);
+            /* text-shadow: 0.125em 0.125em var(--secondary-color); */
+        }
+
+        .logo:hover {
+            color: var(--secondary-color); /* Задайте желаемый цвет для логотипа при наведении */
+            text-decoration: none; /* Удаляет подчеркивание при наведении */
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-left: 1.25em;
+        }
+
+        .nav-links a {
+            font-family: 'Press Start 2P', cursive;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+            font-size: 0.75em;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 2px 0;
+            transition: 0.4s;
+        }
+
+
+
+
+
+
+        @media (max-width: 768px) {
+            body, html {
+                font-size: 14px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                text-align: center;
+                padding-top: 1em;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .nav-links li {
+                margin: 0.5em 0;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body, html {
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 1.25em;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .pong-animation {
+                height: 10em;
+            }
+
+            .paddle {
+                height: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="homepage.html" class="logo">FAST_PONG</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#">AboutGame</a></li>
+                    <li><a href="#">Leaderboard</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="login.html">LogIn</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h2>
+        <p></p>
+        <div class="container">
+            
+        </div>
+    </main>
+</body>
+</html>
